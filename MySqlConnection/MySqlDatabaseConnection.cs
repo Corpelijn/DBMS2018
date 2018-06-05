@@ -48,7 +48,7 @@ namespace MySqlConnection
 
         #region "Properties"
 
-        public bool IsOpen => 
+        public bool IsOpen =>
             connection == null ? false :
             connection.State != System.Data.ConnectionState.Closed ||
             connection.State != System.Data.ConnectionState.Broken;
@@ -98,6 +98,8 @@ namespace MySqlConnection
         {
             connection = new MySql.Data.MySqlClient.MySqlConnection("Server=" + hostname +
                 ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password);
+
+            connection.Open();
         }
 
         public void Close()
@@ -114,11 +116,26 @@ namespace MySqlConnection
         {
             string instruction = new MySqlInstructionCreator(information).ToString();
 
+            MySqlDataTypeProvider provider = new MySqlDataTypeProvider();
+
+            StringBuilder command = new StringBuilder();
+            command.Append("CREATE TABLE ").Append(information.Name).Append(" (");
+
+            for (int i = 0; i < information.Columns.Length; i++)
+            {
+                command.Append(information.Columns[i].Name).Append(" ");
+                command.Append(provider.GetDataTypeAsString(information.Columns[i].Type));
+
+                if (i != information.Columns.Length - 1)
+                    command.Append(",");
+            }
+
+            command.Append(")");
+
             MySqlCommand tCommand = new MySqlCommand();
             tCommand.Connection = connection;
-            tCommand.CommandText = "CREATE TABLE test (@name)";
+            tCommand.CommandText = command.ToString();
 
-            tCommand.Parameters.Add(new MySqlParameter("@name", System.Data.SqlDbType.VarChar).Value = "Smith, Steve");
 
             tCommand.ExecuteNonQuery();
 

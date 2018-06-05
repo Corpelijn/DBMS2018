@@ -11,9 +11,9 @@ namespace TestApp
         #region "Fields"
 
         [DBMSUnique]
-        [DBMSNotNullable]
+        [DBMSNullable(Nullable=false)]
         private string username;
-        [DBMSNonColumn]
+        [DBMSIgnore]
         private byte[] passwordHash;
 
         #endregion
@@ -31,8 +31,15 @@ namespace TestApp
         #region "Properties"
 
         [DBMSColumn]
-        [DBMSNotNullable]
+        [DBMSNullable(Nullable=false)]
         private byte[] PasswordHash => passwordHash;
+
+        [DBMSIgnore]
+        public string Username
+        {
+            get => username;
+            set => username = value;
+        }
 
         #endregion
 
@@ -42,36 +49,6 @@ namespace TestApp
         {
             return Encoding.ASCII.GetBytes(password);
         }
-
-        public string Username
-        {
-            get => username;
-            set => username = value;
-        }
-
-        #endregion
-
-        #region "Abstract/Virtual Methods"
-
-
-
-        #endregion
-
-        #region "Inherited Methods"
-
-
-
-        #endregion
-
-        #region "Static Methods"
-
-
-
-        #endregion
-
-        #region "Operators"
-
-
 
         #endregion
     }
