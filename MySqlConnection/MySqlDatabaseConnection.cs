@@ -48,16 +48,28 @@ namespace MySqlConnection
 
         #region "Properties"
 
-        public bool IsOpen => 
+        public bool IsOpen =>
             connection == null ? false :
-            connection.State != System.Data.ConnectionState.Closed ||
-            connection.State != System.Data.ConnectionState.Broken;
+            (connection.State != System.Data.ConnectionState.Closed ||
+            connection.State != System.Data.ConnectionState.Broken);
 
         #endregion
 
         #region "Methods"
 
+        private string GetDatabaseType(Type type)
+        {
+            if (type == typeof(UInt32))
+            {
+                return "int(11)";
+            }
+            else if (type == typeof(string))
+            {
+                return "text";
+            }
 
+            return "blob";
+        }
 
         #endregion
 
@@ -98,6 +110,8 @@ namespace MySqlConnection
         {
             connection = new MySql.Data.MySqlClient.MySqlConnection("Server=" + hostname +
                 ";Port=" + port + ";Database=" + database + ";Uid=" + user + ";Pwd=" + password);
+
+            connection.Open();
         }
 
         public void Close()
@@ -116,9 +130,30 @@ namespace MySqlConnection
 
             MySqlCommand tCommand = new MySqlCommand();
             tCommand.Connection = connection;
-            tCommand.CommandText = "CREATE TABLE test (@name)";
 
-            tCommand.Parameters.Add(new MySqlParameter("@name", System.Data.SqlDbType.VarChar).Value = "Smith, Steve");
+            StringBuilder commandString = new StringBuilder("CREATE TABLE ");
+            commandString.Append(information.Name).Append("(");
+
+            for (int i = 0; i < information.Columns.Length; i++)
+            {
+                ColumnInformation column = information.Columns[i];
+                commandString.Append(column.Name).Append(" ").Append(GetDatabaseType(column.Type));
+
+                if (column.PrimaryKey)
+                    commandString.Append(" primary key ");
+                if (column.Unique)
+                    commandString.Append(" unique ");
+                if (column.Nullable)
+                    commandString.Append(" not null ");
+
+                if (i < information.Columns.Length - 1)
+                    commandString.Append(",");
+            }
+
+            commandString.Append(")");
+
+            tCommand.CommandText = commandString.ToString();
+
 
             tCommand.ExecuteNonQuery();
 
