@@ -128,8 +128,25 @@ namespace MySqlConnection
         {
             string instruction = new MySqlInstructionCreator(information).ToString();
 
+            MySqlDataTypeProvider provider = new MySqlDataTypeProvider();
+
+            StringBuilder command = new StringBuilder();
+            command.Append("CREATE TABLE ").Append(information.Name).Append(" (");
+
+            for (int i = 0; i < information.Columns.Length; i++)
+            {
+                command.Append(information.Columns[i].Name).Append(" ");
+                command.Append(provider.GetDataTypeAsString(information.Columns[i].Type));
+
+                if (i != information.Columns.Length - 1)
+                    command.Append(",");
+            }
+
+            command.Append(")");
+
             MySqlCommand tCommand = new MySqlCommand();
             tCommand.Connection = connection;
+            tCommand.CommandText = command.ToString();
 
             StringBuilder commandString = new StringBuilder("CREATE TABLE ");
             commandString.Append(information.Name).Append("(");

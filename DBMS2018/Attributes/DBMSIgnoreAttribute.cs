@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DBMS2018.Attributes
 {
-    public class DBMSNotNullableAttribute : Attribute
+    public class DBMSIgnoreAttribute : Attribute
     {
     }
 }
