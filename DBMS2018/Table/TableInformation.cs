@@ -116,7 +116,7 @@ namespace DBMS2018.Table
         /// </summary>
         /// <param name="type">The type to parse</param>
         /// <returns>Returns the information for a table as a TableInformation-object</returns>
-        public static TableInformation Parse(Type type)
+        public static TableInformation FromType(Type type)
         {
             TableInformation tableinfo = new TableInformation();
 

@@ -10,6 +10,9 @@ using MySql.Data.MySqlClient;
 
 namespace MySqlConnection
 {
+    /// <summary>
+    /// This class creates and stores a connection to a MySql database for the DBMS database manager
+    /// </summary>
     public class MySqlDatabaseConnection : IDatabaseConnection
     {
         #region "Fields"
@@ -26,16 +29,15 @@ namespace MySqlConnection
 
         #region "Constructors"
 
-        public MySqlDatabaseConnection(string hostname, string database, string user, string password)
-        {
-            this.hostname = hostname;
-            this.port = 3306;
-            this.database = database;
-            this.user = user;
-            this.password = password;
-        }
-
-        public MySqlDatabaseConnection(string hostname, ushort port, string database, string user, string password)
+        /// <summary>
+        /// Creates a new MySql database connection
+        /// </summary>
+        /// <param name="hostname">The hostname of the server to connect to</param>
+        /// <param name="database">The name of the database to connect to</param>
+        /// <param name="user">The username to connect to the database</param>
+        /// <param name="password">The password to connect to the database</param>
+        /// <param name="port">The TCP port where the database is listening</param>
+        public MySqlDatabaseConnection(string hostname, string database, string user, string password, ushort port = 3306)
         {
             this.hostname = hostname;
             this.port = port;
@@ -48,32 +50,19 @@ namespace MySqlConnection
 
         #region "Properties"
 
+        /// <summary>
+        /// Gets if the connection to the database is open
+        /// </summary>
         public bool IsOpen =>
             connection == null ? false :
             (connection.State != System.Data.ConnectionState.Closed ||
             connection.State != System.Data.ConnectionState.Broken);
 
+        public ConnectionState State => ConnectionState.Closed;
+
         #endregion
 
         #region "Methods"
-
-        private string GetDatabaseType(Type type)
-        {
-            if (type == typeof(UInt32))
-            {
-                return "int(11)";
-            }
-            else if (type == typeof(string))
-            {
-                return "text";
-            }
-
-            return "blob";
-        }
-
-        #endregion
-
-        #region "Abstract/Virtual Methods"
 
 
 
@@ -147,30 +136,6 @@ namespace MySqlConnection
             MySqlCommand tCommand = new MySqlCommand();
             tCommand.Connection = connection;
             tCommand.CommandText = command.ToString();
-
-            StringBuilder commandString = new StringBuilder("CREATE TABLE ");
-            commandString.Append(information.Name).Append("(");
-
-            for (int i = 0; i < information.Columns.Length; i++)
-            {
-                ColumnInformation column = information.Columns[i];
-                commandString.Append(column.Name).Append(" ").Append(GetDatabaseType(column.Type));
-
-                if (column.PrimaryKey)
-                    commandString.Append(" primary key ");
-                if (column.Unique)
-                    commandString.Append(" unique ");
-                if (column.Nullable)
-                    commandString.Append(" not null ");
-
-                if (i < information.Columns.Length - 1)
-                    commandString.Append(",");
-            }
-
-            commandString.Append(")");
-
-            tCommand.CommandText = commandString.ToString();
-
 
             tCommand.ExecuteNonQuery();
 

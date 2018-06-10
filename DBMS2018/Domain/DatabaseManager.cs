@@ -11,7 +11,9 @@ namespace DBMS2018.Domain
     {
         #region "Fields"
 
-        private List<IDatabaseConnection> connections;
+        private Dictionary<string, IDatabaseConnection> _connections;
+        private string _currentConnection;
+        private string _defaultConnection;
 
         #endregion
 
@@ -19,22 +21,22 @@ namespace DBMS2018.Domain
 
         private DatabaseManager()
         {
-            connections = new List<IDatabaseConnection>();
+            _connections = new Dictionary<string, IDatabaseConnection>();
         }
 
         #endregion
 
         #region "Singleton"
 
-        private static DatabaseManager instance;
+        private static DatabaseManager _singletonInstance;
 
         private static DatabaseManager INSTANCE
         {
             get
             {
-                if (instance == null)
-                    instance = new DatabaseManager();
-                return instance;
+                if (_singletonInstance == null)
+                    _singletonInstance = new DatabaseManager();
+                return _singletonInstance;
             }
         }
 
@@ -48,45 +50,81 @@ namespace DBMS2018.Domain
 
         #region "Methods"
 
-        private void OpenClosedConnections()
-        {
-            foreach(IDatabaseConnection connection in connections)
-            {
-                if (!connection.IsOpen)
-                    connection.Open();
-            }
-        }
-
-        #endregion
-
-        #region "Abstract/Virtual Methods"
-
-
-
-        #endregion
-
-        #region "Inherited Methods"
-
-
+        
 
         #endregion
 
         #region "Static Methods"
 
-        public static void AddDatabaseConnection(IDatabaseConnection connection)
+        /// <summary>
+        /// Adds a database connection to the DatabaseManager. 
+        /// </summary>
+        /// <param name="connection">A database connection</param>
+        /// <param name="name">A name for the database connection</param>
+        public static void AddDatabaseConnection(IDatabaseConnection connection, string name = "")
         {
-            INSTANCE.connections.Add(connection);
+            // Check the connection
+            if (connection == null)
+                throw new ArgumentNullException("The connection cannot be a null object");
+
+            // Check if the name is already in use
+            if (INSTANCE._connections.ContainsKey(name))
+                throw new ArgumentException("The specified name is already used for a database. Please input a different name");
+           
+            // Check if the name is empty or null
+            while (name == "" || name == null || INSTANCE._connections.ContainsKey(name))
+            {
+                // Create a name for the database
+                name = "unnamed_" + DateTime.UtcNow.Millisecond.ToString();
+            }
+
+            // Add the connection with the name to the connections
+            INSTANCE._connections.Add(name, connection);
+
+            // If there is no current or default connection, set this connection as default
+            if (INSTANCE._currentConnection == null)
+                INSTANCE._currentConnection = name;
         }
 
-        public static void Open()
+        /// <summary>
+        /// Checks for database connections that are closed and tries to open them
+        /// </summary>
+        public static void OpenAllConnections()
         {
-            INSTANCE.OpenClosedConnections();
+            foreach (IDatabaseConnection connection in INSTANCE._connections.Values)
+            {
+                // Check if the database is closed
+                if (!connection.IsOpen)
+                    connection.Open();
+            }
+        }
+
+        public static void SelectConnection(string database)
+        {
+            if (!INSTANCE._connections.ContainsKey(database))
+                throw new ArgumentException("Cannot find a database with the given name");
+
+            INSTANCE._currentConnection = database;
+        }
+
+        public static void ResetDefaultConnection()
+        {
+            INSTANCE._currentConnection = INSTANCE._defaultConnection;
         }
 
         public static void CreateTable(TableInformation information)
         {
-            INSTANCE.connections[0].CheckTable(information);
-            INSTANCE.connections[0].CreateTable(information);
+            GetCurrentConnection().CheckTable(information);
+            GetCurrentConnection().CreateTable(information);
+        }
+
+        /// <summary>
+        /// Gets the current connection
+        /// </summary>
+        /// <returns>The IDatabaseConnection object of the current connection</returns>
+        public static IDatabaseConnection GetCurrentConnection()
+        {
+            return INSTANCE._connections[INSTANCE._currentConnection];
         }
 
         public static T GetObjectFromDatabase<T>(DataQuery query)
@@ -103,12 +141,6 @@ namespace DBMS2018.Domain
         {
             return null;
         }
-
-        #endregion
-
-        #region "Operators"
-
-
 
         #endregion
     }
