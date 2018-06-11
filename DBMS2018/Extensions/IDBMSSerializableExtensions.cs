@@ -10,7 +10,7 @@ namespace DBMS2018.Extensions
     {
         public static bool CommitToDatabase(this IDBMSSerializable obj)
         {
-            TableInformation info = TableInformation.Parse(obj.GetType());
+            TableInformation info = TableInformation.FromType(obj.GetType());
 
             DatabaseManager.CreateTable(info);
 

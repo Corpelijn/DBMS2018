@@ -10,9 +10,9 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            IDatabaseConnection connection = new MySqlDatabaseConnection("localhost", 3306, "dbms", "root", "");
+            IDatabaseConnection connection = new MySqlDatabaseConnection("localhost", "dbms", "root", "");
             DatabaseManager.AddDatabaseConnection(connection);
-            DatabaseManager.Open();
+            DatabaseManager.OpenAllConnections();
 
             Account account = DatabaseManager.GetObjectFromDatabase<Account>(null);
 

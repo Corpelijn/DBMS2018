@@ -8,8 +8,28 @@ using System.Text;
 
 namespace DBMS2018.Connections
 {
-    public interface IDatabaseConnection : IOpenClose
+    public interface IDatabaseConnection
     {
+        /// <summary>
+        /// Opens the connection to the database
+        /// </summary>
+        void Open();
+
+        /// <summary>
+        /// Closes the connection to the database
+        /// </summary>
+        void Close();
+
+        /// <summary>
+        /// Gets if the database connection is open
+        /// </summary>
+        bool IsOpen { get; }
+
+        /// <summary>
+        /// Gets the state of the databse connection
+        /// </summary>
+        ConnectionState State { get; }
+
         /// <summary>
         /// Inserts an object into the database
         /// </summary>
