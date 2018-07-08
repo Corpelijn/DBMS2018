@@ -1,6 +1,7 @@
 ﻿using DBMS2018;
 using DBMS2018.Data;
 using System;
+using DBMS.Databases;
 
 namespace TestApp
 {
@@ -11,6 +12,7 @@ namespace TestApp
             Account account = new Account("username", "password");
             new DataObject(account);
 
+            DBMSManager.OpenConnection(new MySqlConnection("localhost", "DBMS", "root", ""));
             DBMSManager.Commit(account);
             
             Console.Read();

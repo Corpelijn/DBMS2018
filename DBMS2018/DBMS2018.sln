@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBMS2018", "DBMS2018.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "..\TestApp\TestApp.csproj", "{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMSUnitTests", "..\DBMSUnitTests\DBMSUnitTests.csproj", "{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBMSUnitTests", "..\DBMSUnitTests\DBMSUnitTests.csproj", "{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMS.MySql", "..\Databases\MySql\DBMS.MySql.csproj", "{B53DFD3F-1733-4925-9ED7-07FC063CBA1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53DFD3F-1733-4925-9ED7-07FC063CBA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53DFD3F-1733-4925-9ED7-07FC063CBA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53DFD3F-1733-4925-9ED7-07FC063CBA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53DFD3F-1733-4925-9ED7-07FC063CBA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
