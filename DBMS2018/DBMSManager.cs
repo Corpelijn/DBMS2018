@@ -264,6 +264,10 @@ namespace DBMS2018
             if (defaultDatabase == null || makeDefault)
                 defaultDatabase = name;
 
+            // Check if the current database is null; otherwise set it
+            if (currentDatabase == null)
+                currentDatabase = name;
+
             // Open the database and return the status
             return connection.Open();
         }
