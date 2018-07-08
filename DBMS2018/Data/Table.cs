@@ -13,6 +13,7 @@ namespace DBMS2018.Data
         #region "Fields"
 
         private long _uid; // Name of the table
+        private string _hashedName;
         private string _name;
 
         private List<Column> _columns;
@@ -30,7 +31,7 @@ namespace DBMS2018.Data
 
         #region "Properties"
 
-        public string Name => _uid.ToString();
+        public string Name => _hashedName;
 
         public int ColumnCount => _columns.Count;
 
@@ -53,6 +54,8 @@ namespace DBMS2018.Data
             {
                 _uid *= column.GetUID();
             }
+
+            _hashedName = Convert.ToBase64String(BitConverter.GetBytes(_uid)).Replace("/", "-").Replace("=", "_");
         }
 
         private void ParseType(Type type)

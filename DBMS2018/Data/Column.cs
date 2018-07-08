@@ -13,6 +13,7 @@ namespace DBMS2018.Data
         #region "Fields"
 
         private string _name;
+        private string _hashedName;
         private Type _type;
         private MemberInfo _classRef;
 
@@ -33,7 +34,7 @@ namespace DBMS2018.Data
 
         #region "Properties"
 
-        public string Name => _name;
+        public string Name => _hashedName;
 
         public Type Type => _type;
 
@@ -60,6 +61,9 @@ namespace DBMS2018.Data
             {
                 uid *= c;
             }
+
+            _hashedName = Convert.ToBase64String(BitConverter.GetBytes(uid)).Replace("/", "-").Replace("=", "_");
+
             return uid;
         }
 
