@@ -55,7 +55,7 @@ namespace DBMS2018.Data
                 _uid *= column.GetUID();
             }
 
-            _hashedName = Convert.ToBase64String(BitConverter.GetBytes(_uid)).Replace("/", "-").Replace("=", "_");
+            _hashedName = Base32Converter.ToBase32(BitConverter.GetBytes(_uid));
         }
 
         private void ParseType(Type type)
@@ -115,7 +115,7 @@ namespace DBMS2018.Data
         {
             StringBuilder text = new StringBuilder();
 
-            text.Append(_name).Append(" (").Append(_uid).Append(")");
+            text.Append(_name).Append(" (").Append(_hashedName).Append(")");
             foreach(Column column in _columns)
             {
                 text.Append("\n").Append(column);

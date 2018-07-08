@@ -62,7 +62,7 @@ namespace DBMS2018.Data
                 uid *= c;
             }
 
-            _hashedName = Convert.ToBase64String(BitConverter.GetBytes(uid)).Replace("/", "-").Replace("=", "_");
+            _hashedName = Base32Converter.ToBase32(BitConverter.GetBytes(uid));
 
             return uid;
         }
@@ -75,7 +75,7 @@ namespace DBMS2018.Data
         {
             StringBuilder text = new StringBuilder();
 
-            text.Append("-> ").Append(_name).Append(" (").Append(GetUID()).Append(")");
+            text.Append("-> ").Append(_name).Append(" (").Append(_hashedName).Append(")");
 
             return text.ToString();
         }
