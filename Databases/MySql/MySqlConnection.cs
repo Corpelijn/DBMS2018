@@ -4,6 +4,7 @@ using System;
 using System.Text;
 using System.Data;
 using System.Linq;
+using MySql.Data.MySqlClient;
 
 namespace DBMS.Databases
 {
@@ -69,7 +70,14 @@ namespace DBMS.Databases
 
         public void CreateTable(Table table)
         {
-            throw new NotImplementedException();
+            MySqlCommand command =_connection.CreateCommand();
+            command.CommandText = "CREATE TABLE \'" + table.Name + "\' ()";
+            command.ExecuteNonQuery();
+        }
+
+        public void Insert(DataObject data)
+        {
+           
         }
 
         public bool Open()

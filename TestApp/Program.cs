@@ -10,7 +10,6 @@ namespace TestApp
         static void Main(string[] args)
         {
             Account account = new Account("username", "password");
-            new DataObject(account);
 
             DBMSManager.OpenConnection(new MySqlConnection("localhost", "DBMS", "root", ""));
             DBMSManager.Commit(account);

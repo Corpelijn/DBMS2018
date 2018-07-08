@@ -37,5 +37,10 @@ namespace DBMSUnitTests.Connection
         {
             throw new NotImplementedException();
         }
+
+        public void Insert(DataObject data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
