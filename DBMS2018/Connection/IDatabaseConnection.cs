@@ -54,6 +54,12 @@ namespace DBMS2018.Connection
         /// <param name="table">The table to create in the database</param>
         void CreateTable(Table table);
 
+        /// <summary>
+        /// Inserts the given dataobject into the database
+        /// </summary>
+        /// <param name="data">The data object to insert</param>
+        void Insert(DataObject data);
+
         #endregion
     }
 }

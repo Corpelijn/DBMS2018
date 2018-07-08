@@ -120,17 +120,20 @@ namespace DBMS2018
         public static void Commit(object obj)
         {
             // Check if the current database is unequal to null
-#warning Uncomment this code
-            //if (Current == null)
-            //    throw new InvalidOperationException("The current database is either closed or no database connections are available");
+            if (Current == null)
+                throw new InvalidOperationException("The current database is either closed or no database connections are available");
 
             // Get the table blueprint from the object
             Table tableInfo = Table.ParseFromType(obj.GetType());
 
-            // Check if the table exists
-
-
             Console.WriteLine(tableInfo);
+
+            // Check if the table exists
+            Current.CheckTable(tableInfo);
+
+            // Get a data object
+            DataObject data = new DataObject(obj);
+            Current.Insert(data);
         }
 
         /// <summary>
