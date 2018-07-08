@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DBMS2018.Data
+namespace TestApp
 {
-    public class DataQuery
+    class AccountV3
     {
     }
 }

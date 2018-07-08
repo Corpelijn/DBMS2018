@@ -1,7 +1,5 @@
-﻿using DBMS2018.Connections;
-using DBMS2018.Domain;
-using DBMS2018.Extensions;
-using MySqlConnection;
+﻿using DBMS2018;
+using DBMS2018.Data;
 using System;
 
 namespace TestApp
@@ -10,22 +8,12 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            IDatabaseConnection connection = new MySqlDatabaseConnection("localhost", "dbms", "root", "");
-            DatabaseManager.AddDatabaseConnection(connection);
-            DatabaseManager.OpenAllConnections();
+            Account account = new Account("username", "password");
+            new DataObject(account);
 
-            Account account = DatabaseManager.GetObjectFromDatabase<Account>(null);
-
-            if(account == null)
-            {
-                account = new Account("bas", "test");
-                account.CommitToDatabase();
-            }
-            else
-            {
-                account.Username = "haha";
-                account.CommitToDatabase();
-            }
+            DBMSManager.Commit(account);
+            
+            Console.Read();
         }
     }
 }

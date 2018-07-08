@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMS2018", "DBMS2018.csproj", "{5C1FB823-5E1E-4071-9466-185B9587E4DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBMS2018", "DBMS2018.csproj", "{5C1FB823-5E1E-4071-9466-185B9587E4DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "..\TestApp\TestApp.csproj", "{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "..\TestApp\TestApp.csproj", "{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySqlConnection", "..\MySqlConnection\MySqlConnection.csproj", "{D428E338-B129-4358-9706-FE958DFC6D1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBMSUnitTests", "..\DBMSUnitTests\DBMSUnitTests.csproj", "{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +23,15 @@ Global
 		{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B297B2-32E9-4BC3-A226-B9DABFC70D6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D428E338-B129-4358-9706-FE958DFC6D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D428E338-B129-4358-9706-FE958DFC6D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D428E338-B129-4358-9706-FE958DFC6D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D428E338-B129-4358-9706-FE958DFC6D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4A5EBB-025D-4E13-9827-1ED4388D69FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF785062-C64C-4C94-8D2F-D3C0728ADF2B}
 	EndGlobalSection
 EndGlobal

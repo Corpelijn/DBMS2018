@@ -1,17 +1,19 @@
 ﻿using DBMS2018.Attributes;
-using DBMS2018.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TestApp
 {
-    public class Account : IDBMSSerializable
+    [DBMSLegacy]
+    [DBMSLegacyConvert(typeof(AccountV2), typeof(AccountV2))]
+    [DBMSLegacyConvert(typeof(AccountV3), typeof(AccountConverter))]
+    public class Account
     {
         #region "Fields"
 
         [DBMSUnique]
-        [DBMSNullable(Nullable=false)]
+        [DBMSNullable(false)]
         private string username;
         [DBMSIgnore]
         private byte[] passwordHash;
@@ -30,8 +32,8 @@ namespace TestApp
 
         #region "Properties"
 
-        [DBMSColumn]
-        [DBMSNullable(Nullable=false)]
+        [DBMSInclude]
+        [DBMSNullable(false)]
         private byte[] PasswordHash => passwordHash;
 
         [DBMSIgnore]
