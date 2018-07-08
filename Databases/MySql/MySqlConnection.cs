@@ -71,7 +71,7 @@ namespace DBMS.Databases
         public void CreateTable(Table table)
         {
             MySqlCommand command =_connection.CreateCommand();
-            command.CommandText = "CREATE TABLE \'" + table.Name + "\' ()";
+            command.CommandText = "CREATE TABLE " + table.Name + " (__uid__ int(11) autoincrement)";
             command.ExecuteNonQuery();
         }
 
